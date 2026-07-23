@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<script src="js/tracking.js" data-step="caps"></script>
+<title>Qual o seu objetivo?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --orange:#FF7A1E;
+    --orange-deep:#F0630A;
+    --orange-soft:#FFF1E4;
+    --ink:#1C1B1A;
+    --ink-soft:#6B6864;
+    --line:#ECE7E1;
+    --bg:#FFFDF9;
+    --blue:#4C6EF5;
+    --green:#2FAE7E;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{height:100%;}
+  body{
+    background:var(--bg);
+    font-family:'Manrope', sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    display:flex; justify-content:center;
+    min-height:100vh;
+  }
+  .phone{
+    width:100%; max-width:430px; min-height:100vh;
+    background:var(--bg);
+    display:flex; flex-direction:column;
+    position:relative; overflow:hidden;
+  }
+
+  /* progress bar */
+  .progress-track{ height:6px; background:var(--line); width:100%; }
+  .progress-fill{
+    height:100%; width:78%; background:linear-gradient(90deg, var(--orange-deep), var(--orange));
+    border-radius:0 6px 6px 0;
+    animation:fillIn 1s cubic-bezier(.2,.8,.2,1) both;
+  }
+  @keyframes fillIn{ from{width:6%;} to{width:78%;} }
+
+  .content{
+    flex:1; display:flex; flex-direction:column; padding:0 24px;
+  }
+
+  /* illustration */
+  .illus-wrap{
+    position:relative; padding:44px 0 26px; display:flex; justify-content:center;
+    animation:fadeUp .6s ease both;
+  }
+  .illus-wrap svg{ width:100%; max-width:340px; height:auto; }
+  .blob{
+    position:absolute; top:38%; right:2%; width:92px; height:92px; border-radius:50%;
+    background:conic-gradient(from 0deg, var(--orange-soft), #fff, var(--orange-soft));
+    border:14px solid var(--orange-soft); box-sizing:border-box;
+    animation:spin 12s linear infinite;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+
+  h1{
+    font-family:'Baloo 2', sans-serif; font-weight:700;
+    font-size:26px; line-height:1.25; letter-spacing:-0.3px;
+    margin-bottom:22px;
+    animation:fadeUp .6s ease .08s both;
+  }
+
+  .options{ display:flex; flex-direction:column; gap:14px; margin-bottom:18px; }
+  .opt{
+    position:relative;
+    border:2px solid var(--line); background:#fff;
+    border-radius:16px; padding:18px 20px;
+    font-family:'Baloo 2', sans-serif; font-weight:600; font-size:16.5px;
+    display:flex; align-items:center; justify-content:space-between;
+    cursor:pointer; transition:all .22s ease;
+    animation:fadeUp .6s ease both;
+  }
+  .opt:nth-child(1){ animation-delay:.14s; }
+  .opt:nth-child(2){ animation-delay:.2s; }
+
+  .opt .label{ display:flex; align-items:center; gap:10px; }
+  .opt .emoji{ font-size:19px; }
+  .opt .radio{
+    width:22px; height:22px; border-radius:50%; border:2px solid #D8D2CA;
+    flex-shrink:0; position:relative; transition:all .2s ease; background:#fff;
+  }
+  .opt .radio::after{
+    content:''; position:absolute; inset:4px; border-radius:50%; background:#fff;
+    transform:scale(0); transition:transform .18s ease;
+  }
+  .opt.selected{
+    background:var(--orange); border-color:var(--orange-deep); color:#fff;
+    box-shadow:0 10px 24px -10px rgba(240,99,10,0.55);
+    transform:translateY(-1px);
+  }
+  .opt.selected .radio{ border-color:#fff; background:rgba(255,255,255,0.15); }
+  .opt.selected .radio::after{ transform:scale(1); background:#fff; }
+  .opt:active{ transform:scale(0.98); }
+
+  .spacer{ flex:1; min-height:24px; }
+
+  .cta-wrap{ padding:6px 0 28px; }
+  .cta{
+    width:100%; border:none; border-radius:16px; padding:18px;
+    font-family:'Baloo 2', sans-serif; font-weight:700; font-size:17px;
+    background:var(--line); color:#B7B0A6; cursor:not-allowed;
+    transition:all .25s ease; letter-spacing:.2px;
+  }
+  .cta.active{
+    background:linear-gradient(135deg, var(--orange), var(--orange-deep));
+    color:#fff; cursor:pointer;
+    box-shadow:0 14px 28px -12px rgba(240,99,10,0.6);
+  }
+  .cta.active:active{ transform:scale(0.98); }
+
+  .trust-line{
+    display:flex; align-items:center; justify-content:center; gap:6px;
+    font-size:11.5px; color:var(--ink-soft); padding-bottom:18px;
+  }
+  .trust-line svg{ width:12px; height:12px; stroke:var(--green); }
+
+  footer{
+    text-align:center; font-size:11px; color:#B7B0A6; padding-bottom:22px;
+  }
+  footer a{ color:#B7B0A6; text-decoration:none; }
+
+  @keyframes fadeUp{ from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
+
+  .overlay{
+    position:fixed; inset:0; background:rgba(28,27,26,0.92);
+    display:none; align-items:center; justify-content:center; flex-direction:column; gap:16px; z-index:50;
+  }
+  .overlay.show{ display:flex; animation:fadeIn .2s ease; }
+  @keyframes fadeIn{ from{opacity:0;} to{opacity:1;} }
+  .spinner{
+    width:38px; height:38px; border-radius:50%;
+    border:3px solid rgba(255,122,30,0.25); border-top-color:var(--orange);
+    animation:spin2 .7s linear infinite;
+  }
+  @keyframes spin2{ to{ transform:rotate(360deg); } }
+  .overlay p{ color:#fff; font-family:'Baloo 2', sans-serif; font-size:15px; }
+</style>
+</head>
+<body>
+
+<div class="phone">
+  <div class="progress-track"><div class="progress-fill"></div></div>
+
+  <div class="content">
+    <div class="illus-wrap">
+      <div class="blob"></div>
+  <img style="width: 100%; height: auto;" src="./image.png" alt="">
+    </div>
+
+    <h1>Qual o seu objetivo?</h1>
+
+    <div class="options">
+      <div class="opt" id="opt-pessoal" onclick="selectOpt('pessoal')">
+        <span class="label"><span class="emoji">🙂</span>Uso Pessoal</span>
+        <span class="radio"></span>
+      </div>
+      <div class="opt" id="opt-negocio" onclick="selectOpt('negocio')">
+        <span class="label"><span class="emoji">🏢</span>Para Meu Negócio</span>
+        <span class="radio"></span>
+      </div>
+    </div>
+
+    <div class="spacer"></div>
+
+    <div class="cta-wrap">
+      <button class="cta" id="ctaBtn" onclick="proceed()">Continuar</button>
+      <div class="trust-line">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+        Consulta 100% segura e gratuita
+      </div>
+    </div>
+
+    <footer>© 2026 · Página segura de simulação</footer>
+  </div>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="spinner"></div>
+  <p id="overlayText">Preparando sua simulação...</p>
+</div>
+
+<script>
+  // ======= EDITE AQUI OS LINKS DE DESTINO =======
+  const REDIRECT_URLS = {
+    pessoal: "https://suupersim.netlify.app/inicio/index.html",
+    negocio: "https://suupersim.netlify.app/inicio/index.html"
+  };
+  // ===============================================
+
+  let selected = null;
+
+  function selectOpt(tipo){
+    selected = tipo;
+    document.getElementById('opt-pessoal').classList.toggle('selected', tipo === 'pessoal');
+    document.getElementById('opt-negocio').classList.toggle('selected', tipo === 'negocio');
+    document.getElementById('ctaBtn').classList.add('active');
+
+    try{
+      if (window.ttq) ttq.track('ClickButton', { content_name: tipo });
+      if (window.gtag) gtag('event', 'select_objective', { objective: tipo });
+    }catch(e){}
+  }
+
+  function proceed(){
+    if(!selected) return;
+    const overlay = document.getElementById('overlay');
+    document.getElementById('overlayText').textContent =
+      selected === 'pessoal' ? 'Preparando sua simulação pessoal...' : 'Preparando sua simulação empresarial...';
+    overlay.classList.add('show');
+    setTimeout(() => { window.location.href = REDIRECT_URLS[selected]; }, 850);
+  }
+</script>
+
+</body>
+</html>
